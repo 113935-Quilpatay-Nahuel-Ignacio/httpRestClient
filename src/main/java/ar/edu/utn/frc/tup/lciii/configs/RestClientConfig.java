@@ -8,28 +8,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
-
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class RestClientConfig {
-    private static final int TIME_OUT = 1000;
+    private static final int TIME_OUT = 1000; // expressed in milliseconds 1000 = 1 sec.
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.setConnectTimeout(Duration.ofMillis(TIME_OUT))
+        return builder
+                .setConnectTimeout(Duration.ofMillis(TIME_OUT))
                 .setReadTimeout(Duration.ofMillis(TIME_OUT))
                 .build();
     }
 
     @Bean
-    public WebClient webClient(){
+    public WebClient webClient() {
+
+        //return WebClient.builder().build();
+
+        //HttpClient de Netty (programación reactiva y asincrónica)
         HttpClient httpClient = HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIME_OUT)
                 .responseTimeout(Duration.ofMillis(TIME_OUT))

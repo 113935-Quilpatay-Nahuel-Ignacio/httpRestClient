@@ -9,9 +9,9 @@ public class PostRestClient {
 
     //consumir APIs REST
     @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    String baseResourceUrl = "http://my-json-server.typicode.com/TUP-UTN-FRC-LCIII/fake-apis/posts";
+    String baseResourceUrl = "https://my-json-server.typicode.com/TUP-UTN-FRC-LCIII/fake-apis/posts";
 
     public ResponseEntity<PostDTO[]> getPosts() {
         return restTemplate.getForEntity(baseResourceUrl, PostDTO[].class);

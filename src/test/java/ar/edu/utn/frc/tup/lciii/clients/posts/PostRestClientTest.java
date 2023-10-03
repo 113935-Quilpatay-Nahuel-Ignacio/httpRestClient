@@ -25,9 +25,9 @@ public class PostRestClientTest {
     void getPostsTest() {
         PostDTO postDTO = new PostDTO(10L, "Test unitario");
         PostDTO postDTO2 = new PostDTO(11L, "Test unitario 2");
-        PostDTO[] myArrayPost = {postDTO, postDTO2};
+        PostDTO[] postsArray = {postDTO, postDTO2};
         when(restTemplate.getForEntity("https://my-json-server.typicode.com/TUP-UTN-FRC-LCIII/fake-apis/posts", PostDTO[].class))
-                .thenReturn(ResponseEntity.ok(myArrayPost));
+                .thenReturn(ResponseEntity.ok(postsArray));
         ResponseEntity<PostDTO[]> result = postRestClient.getPosts();
         assertEquals(2, Objects.requireNonNull(result.getBody()).length);
         assertEquals("Test unitario", Objects.requireNonNull(result.getBody())[0].title());

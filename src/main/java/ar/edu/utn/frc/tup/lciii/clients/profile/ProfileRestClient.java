@@ -11,12 +11,24 @@ import reactor.core.publisher.Mono;
 @Service
 public class ProfileRestClient {
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    String baseResourceUrl = "https://my-json-server.typicode.com/TUP-UTN-FRC-LCIII/fake-apis/profile";
+
+    public ResponseEntity<ProfileDTO> getProfile() {
+        return restTemplate.getForEntity(baseResourceUrl, ProfileDTO.class);
+    }
+
+
     //WEB CLIENT
     /*@Autowired
     private WebClient webClient;
 
     String resourceUrl = "/profile";
 
+    //Mono: capturar el resultado de una operación asíncrona
+    //Flux: capturar el resultado de una operación asíncrona que devuelve una colección
     public Mono<ResponseEntity<ProfileDTO>> getProfile(){
         return webClient.get()
                 .uri(resourceUrl)
@@ -24,12 +36,4 @@ public class ProfileRestClient {
                 .toEntity(ProfileDTO.class);
     }*/
 
-    @Autowired
-    RestTemplate restTemplate = new RestTemplate();
-
-    String baseResourceUrl = "https://my-json-server.typicode.com/TUP-UTN-FRC-LCIII/fake-apis/profile";
-
-    public ResponseEntity<ProfileDTO> getPost(Long id) {
-        return restTemplate.getForEntity(baseResourceUrl + "/" + id, ProfileDTO.class);
-    }
 }
